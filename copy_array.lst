@@ -36,9 +36,10 @@ ARM Macro Assembler    Page 1
    24 00000000 00000000 
                        M       DCD              0
    25 00000004                 END
-Command Line: --debug --xref --cpu=Cortex-M3 --apcs=interwork --depend=hello.d 
--ohello.o -IC:\Keil\ARM\RV31\INC -IC:\Keil\ARM\CMSIS\Include -IC:\Keil\ARM\Inc\
-NXP\LPC17xx --predefine="__EVAL SETA 1" --list=hello.lst hello.asm
+Command Line: --debug --xref --cpu=Cortex-M3 --apcs=interwork --depend=copy_arr
+ay.d -ocopy_array.o -IC:\Keil\ARM\RV31\INC -IC:\Keil\ARM\CMSIS\Include -IC:\Kei
+l\ARM\Inc\NXP\LPC17xx --predefine="__EVAL SETA 1" --list=copy_array.lst copy_ar
+ray.asm
 
 
 
@@ -49,7 +50,7 @@ RESET 00000000
 
 Symbol: RESET
    Definitions
-      At line 1 in file hello.asm
+      At line 1 in file copy_array.asm
    Uses
       None
 Comment: RESET unused
@@ -57,9 +58,9 @@ __Vectors 00000000
 
 Symbol: __Vectors
    Definitions
-      At line 4 in file hello.asm
+      At line 4 in file copy_array.asm
    Uses
-      At line 2 in file hello.asm
+      At line 2 in file copy_array.asm
 Comment: __Vectors used once
 2 symbols
 
@@ -72,40 +73,40 @@ BACK 00000008
 
 Symbol: BACK
    Definitions
-      At line 16 in file hello.asm
+      At line 16 in file copy_array.asm
    Uses
-      At line 19 in file hello.asm
+      At line 19 in file copy_array.asm
 Comment: BACK used once
 N 00000018
 
 Symbol: N
    Definitions
-      At line 22 in file hello.asm
+      At line 22 in file copy_array.asm
    Uses
-      At line 12 in file hello.asm
+      At line 12 in file copy_array.asm
 Comment: N used once
 Reset_Handler 00000000
 
 Symbol: Reset_Handler
    Definitions
-      At line 11 in file hello.asm
+      At line 11 in file copy_array.asm
    Uses
-      At line 6 in file hello.asm
-      At line 10 in file hello.asm
+      At line 6 in file copy_array.asm
+      At line 10 in file copy_array.asm
 
 STOP 00000014
 
 Symbol: STOP
    Definitions
-      At line 21 in file hello.asm
+      At line 21 in file copy_array.asm
    Uses
-      At line 21 in file hello.asm
+      At line 21 in file copy_array.asm
 Comment: STOP used once
 mycode 00000000
 
 Symbol: mycode
    Definitions
-      At line 8 in file hello.asm
+      At line 8 in file copy_array.asm
    Uses
       None
 Comment: mycode unused
@@ -120,15 +121,15 @@ M 00000000
 
 Symbol: M
    Definitions
-      At line 24 in file hello.asm
+      At line 24 in file copy_array.asm
    Uses
-      At line 13 in file hello.asm
+      At line 13 in file copy_array.asm
 Comment: M used once
 mydata 00000000
 
 Symbol: mydata
    Definitions
-      At line 23 in file hello.asm
+      At line 23 in file copy_array.asm
    Uses
       None
 Comment: mydata unused
