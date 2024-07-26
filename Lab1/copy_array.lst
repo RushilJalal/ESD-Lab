@@ -15,14 +15,21 @@ ARM Macro Assembler    Page 1
     9 00000000                 ENTRY
    10 00000000                 EXPORT           Reset_Handler
    11 00000000         Reset_Handler
-   12 00000000 480A            LDR              R0, =N
-   13 00000002 4A0B            LDR              R2, =M
-   14 00000004 F04F 0305       MOV              R3, #5
+   12 00000000 480A            LDR              R0, =N      ;/address of N
+   13 00000002 4A0B            LDR              R2, =M      ;/address of M
+   14 00000004 F04F 0305       MOV              R3, #5      ;/loop counter
    15 00000008         
    16 00000008 F850 1B04 
-                       BACK    LDR              R1, [R0], #4
-   17 0000000C F842 1B04       STR              R1, [R2], #4
-   18 00000010 3B01            SUBS             R3, #1
+                       BACK    LDR              R1, [R0], #4 ;/load value of R0
+                                                             to R1(0x1), shift 
+                                                            R0 by 4 bits
+   17 0000000C F842 1B04       STR              R1, [R2], #4 ;/store value of R
+                                                            1 in R2(containing 
+                                                            address of M) and s
+                                                            hift this address b
+                                                            y 4
+   18 00000010 3B01            SUBS             R3, #1      ;/SUBS changes the 
+                                                            Z flag
    19 00000012 D1F9            BNE              BACK
    20 00000014         
    21 00000014 E7FE    STOP    B                STOP
@@ -30,9 +37,15 @@ ARM Macro Assembler    Page 1
               00000002 
               00000003 
               00000004 
-              00000005 N       DCD              0x1, 0x2, 0x3, 0x4, 0x5
+              00000005 N       DCD              0x1, 0x2, 0x3, 0x4, 0x5 ;/Defin
+                                                            e Constant Data(32b
+                                                            it)
    23 0000002C 00000000 
-              00000000         AREA             mydata, DATA, READWRITE
+              00000000         AREA             mydata, DATA, READWRITE ;/anyth
+                                                            ing defined in the 
+                                                            READWRITE area is i
+                                                            nitialised to 0 at 
+                                                            exec time
    24 00000000 00000000 
                        M       DCD              0
    25 00000004                 END
