@@ -392,9 +392,9 @@
           <GroupName>Source Group 1</GroupName>
           <Files>
             <File>
-              <FileName>copy_array.asm</FileName>
+              <FileName>sum.asm</FileName>
               <FileType>2</FileType>
-              <FilePath>.\copy_array.asm</FilePath>
+              <FilePath>.\sum.asm</FilePath>
             </File>
           </Files>
         </Group>

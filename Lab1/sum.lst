@@ -1,0 +1,155 @@
+
+
+
+ARM Macro Assembler    Page 1 
+
+
+    1 00000000                 AREA             RESET, DATA, READONLY
+    2 00000000                 EXPORT           __Vectors
+    3 00000000         
+    4 00000000         __Vectors
+    5 00000000 10001000        DCD              0x10001000
+    6 00000004 00000000        DCD              Reset_Handler
+    7 00000008                 ALIGN
+    8 00000008                 AREA             mycoder, CODE, READONLY
+    9 00000000                 ENTRY
+   10 00000000                 EXPORT           Reset_Handler
+   11 00000000         
+   12 00000000         Reset_Handler
+   13 00000000         ; subtract 2 64-bit numbers and store in memory
+   14 00000000 480E            LDR              R0, =N1
+   15 00000002 490F            LDR              R1, =N2
+   16 00000004 4A0F            LDR              R2, =M
+   17 00000006 F04F 0300       MOV              R3, #0      ; diff of numbers (
+                                                            low 32 bits)
+   18 0000000A F04F 0400       MOV              R4, #0      ; diff of numbers (
+                                                            high 32 bits)
+   19 0000000E         
+   20 0000000E F850 6B04       LDR              R6, [R0], #4
+   21 00000012 F851 7B04       LDR              R7, [R1], #4
+   22 00000016 1BF3            SUBS             R3, R6, R7
+   23 00000018 F850 6B04       LDR              R6, [R0], #4
+   24 0000001C F851 7B04       LDR              R7, [R1], #4
+   25 00000020 EB66 0407       SBC              R4, R6, R7
+   26 00000024 F842 3B04       STR              R3, [R2], #4 
+                                                            ; Store low 32 bits
+                                                            
+   27 00000028 6014            STR              R4, [R2]    ; Store high 32 bit
+                                                            s
+   28 0000002A         
+   29 0000002A         
+   30 0000002A E7FE    STOP    B                STOP
+   31 0000002C         
+   32 0000002C FFFFFFFF 
+              00000002 N1      DCD              0xFFFFFFFF, 0x00000002 ; 64-bit
+                                                             number: 0x00000002
+                                                            FFFFFFFF
+   33 00000034 00000003 
+              00000004 N2      DCD              0x00000003, 0x00000004 ; 64-bit
+                                                             number: 0x00000004
+                                                            00000003
+   34 0000003C 00000000 
+              00000000 
+              00000000         AREA             mydata, DATA, READWRITE
+   35 00000000 00000000 
+              00000000 M       DCD              0, 0        ; Space for 64-bit 
+                                                            result
+   36 00000008                 END
+Command Line: --debug --xref --cpu=Cortex-M3 --apcs=interwork --depend=sum.d -o
+sum.o -IC:\Keil\ARM\RV31\INC -IC:\Keil\ARM\CMSIS\Include -IC:\Keil\ARM\Inc\NXP\
+LPC17xx --predefine="__EVAL SETA 1" --list=sum.lst sum.asm
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Relocatable symbols
+
+RESET 00000000
+
+Symbol: RESET
+   Definitions
+      At line 1 in file sum.asm
+   Uses
+      None
+Comment: RESET unused
+__Vectors 00000000
+
+Symbol: __Vectors
+   Definitions
+      At line 4 in file sum.asm
+   Uses
+      At line 2 in file sum.asm
+Comment: __Vectors used once
+2 symbols
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Relocatable symbols
+
+N1 0000002C
+
+Symbol: N1
+   Definitions
+      At line 32 in file sum.asm
+   Uses
+      At line 14 in file sum.asm
+Comment: N1 used once
+N2 00000034
+
+Symbol: N2
+   Definitions
+      At line 33 in file sum.asm
+   Uses
+      At line 15 in file sum.asm
+Comment: N2 used once
+Reset_Handler 00000000
+
+Symbol: Reset_Handler
+   Definitions
+      At line 12 in file sum.asm
+   Uses
+      At line 6 in file sum.asm
+      At line 10 in file sum.asm
+
+STOP 0000002A
+
+Symbol: STOP
+   Definitions
+      At line 30 in file sum.asm
+   Uses
+      At line 30 in file sum.asm
+Comment: STOP used once
+mycoder 00000000
+
+Symbol: mycoder
+   Definitions
+      At line 8 in file sum.asm
+   Uses
+      None
+Comment: mycoder unused
+5 symbols
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Relocatable symbols
+
+M 00000000
+
+Symbol: M
+   Definitions
+      At line 35 in file sum.asm
+   Uses
+      At line 16 in file sum.asm
+Comment: M used once
+mydata 00000000
+
+Symbol: mydata
+   Definitions
+      At line 34 in file sum.asm
+   Uses
+      None
+Comment: mydata unused
+2 symbols
+342 symbols in table
