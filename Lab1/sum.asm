@@ -1,4 +1,4 @@
-	AREA RESET, DATA, READONLY
+    AREA RESET, DATA, READONLY
     EXPORT __Vectors
 
 __Vectors
@@ -10,27 +10,25 @@ __Vectors
     EXPORT Reset_Handler
 	
 Reset_Handler
-    ; subtract 2 64-bit numbers and store in memory
-    LDR R0, =N1
-    LDR R1, =N2
-    LDR R2, =M
-    MOV R3, #0  ; diff of numbers (low 32 bits)
-    MOV R4, #0  ; diff of numbers (high 32 bits)
-	LDR R5, =2
-    
-LOOP LDR R6, [R0], #4
-    LDR R7, [R1], #4
-    SBC R3, R6, R7
-	STR R3, [R2], #4
-	SUB R5, #1
-	CMP R5, #0
+    ;/32 bit number convert to ascii
+	LDR R0, =N
+	LDR R1, [R0]
+	LDR R2, =M
+	LDR R3, =0x2;/counter
+	
+LOOP AND R4, R1, #0xF;/stores LSB in R4
+	CMP R4, #0x9;/to check if number or char
+	ADDHI R4, #0x37;/0x41(ascii of A) - 0xA = 0X37
+	ADDLS R4, #0x30;/ascii code for 0 in hex
+	LSR R1, #4
+	SUBS R3, #1
+	STR R4, [R2], #4
 	BNE LOOP
     
     
 STOP B STOP
 
-N1 DCD 0xFFFFFFFF, 0x00000002  ; 64-bit number: 0x00000002FFFFFFFF
-N2 DCD 0x00000003, 0x00000004  ; 64-bit number: 0x0000000400000003
+N DCD 0xA3
     AREA mydata, DATA, READWRITE
-M DCD 0, 0  ; Space for 64-bit result
+M DCD 0
     END

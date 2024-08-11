@@ -16,43 +16,36 @@ ARM Macro Assembler    Page 1
    10 00000000                 EXPORT           Reset_Handler
    11 00000000         
    12 00000000         Reset_Handler
-   13 00000000         ; subtract 2 64-bit numbers and store in memory
-   14 00000000 480E            LDR              R0, =N1
-   15 00000002 490F            LDR              R1, =N2
-   16 00000004 4A0F            LDR              R2, =M
-   17 00000006 F04F 0300       MOV              R3, #0      ; diff of numbers (
-                                                            low 32 bits)
-   18 0000000A F04F 0400       MOV              R4, #0      ; diff of numbers (
-                                                            high 32 bits)
-   19 0000000E F04F 0502       LDR              R5, =2
-   20 00000012         
-   21 00000012 F850 6B04 
-                       LOOP    LDR              R6, [R0], #4
-   22 00000016 F851 7B04       LDR              R7, [R1], #4
-   23 0000001A EB66 0307       SBC              R3, R6, R7
-   24 0000001E F842 3B04       STR              R3, [R2], #4
-   25 00000022 F1A5 0501       SUB              R5, #1
-   26 00000026 2D00            CMP              R5, #0
-   27 00000028 D1F3            BNE              LOOP
-   28 0000002A         
-   29 0000002A         
-   30 0000002A E7FE    STOP    B                STOP
-   31 0000002C         
-   32 0000002C FFFFFFFF 
-              00000002 N1      DCD              0xFFFFFFFF, 0x00000002 ; 64-bit
-                                                             number: 0x00000002
-                                                            FFFFFFFF
-   33 00000034 00000003 
-              00000004 N2      DCD              0x00000003, 0x00000004 ; 64-bit
-                                                             number: 0x00000004
-                                                            00000003
-   34 0000003C 00000000 
-              00000000 
+   13 00000000         ;/32 bit number convert to ascii
+   14 00000000 4809            LDR              R0, =N
+   15 00000002 6801            LDR              R1, [R0]
+   16 00000004 4A09            LDR              R2, =M
+   17 00000006 F04F 0302       LDR              R3, =0x2    ;/counter
+   18 0000000A         
+   19 0000000A F001 040F 
+                       LOOP    AND              R4, R1, #0xF ;/stores LSB in R4
+                                                            
+   20 0000000E 2C09            CMP              R4, #0x9    ;/to check if numbe
+                                                            r or char
+   21 00000010 BF8C 3437       ADDHI            R4, #0x37   ;/0x41(ascii of A) 
+                                                            - 0xA = 0X37
+   22 00000014 3430            ADDLS            R4, #0x30   ;/ascii code for 0 
+                                                            in hex
+   23 00000016 EA4F 1111       LSR              R1, #4
+   24 0000001A 3B01            SUBS             R3, #1
+   25 0000001C F842 4B04       STR              R4, [R2], #4
+   26 00000020 D1F3            BNE              LOOP
+   27 00000022         
+   28 00000022         
+   29 00000022 E7FE    STOP    B                STOP
+   30 00000024         
+   31 00000024 000000A3 
+                       N       DCD              0xA3
+   32 00000028 00000000 
               00000000         AREA             mydata, DATA, READWRITE
-   35 00000000 00000000 
-              00000000 M       DCD              0, 0        ; Space for 64-bit 
-                                                            result
-   36 00000008                 END
+   33 00000000 00000000 
+                       M       DCD              0
+   34 00000004                 END
 Command Line: --debug --xref --cpu=Cortex-M3 --apcs=interwork --depend=sum.d -o
 sum.o -IC:\Keil\ARM\RV31\INC -IC:\Keil\ARM\CMSIS\Include -IC:\Keil\ARM\Inc\NXP\
 LPC17xx --predefine="__EVAL SETA 1" --list=sum.lst sum.asm
@@ -85,30 +78,22 @@ Comment: __Vectors used once
 ARM Macro Assembler    Page 1 Alphabetic symbol ordering
 Relocatable symbols
 
-LOOP 00000012
+LOOP 0000000A
 
 Symbol: LOOP
    Definitions
-      At line 21 in file sum.asm
+      At line 19 in file sum.asm
    Uses
-      At line 27 in file sum.asm
+      At line 26 in file sum.asm
 Comment: LOOP used once
-N1 0000002C
+N 00000024
 
-Symbol: N1
+Symbol: N
    Definitions
-      At line 32 in file sum.asm
+      At line 31 in file sum.asm
    Uses
       At line 14 in file sum.asm
-Comment: N1 used once
-N2 00000034
-
-Symbol: N2
-   Definitions
-      At line 33 in file sum.asm
-   Uses
-      At line 15 in file sum.asm
-Comment: N2 used once
+Comment: N used once
 Reset_Handler 00000000
 
 Symbol: Reset_Handler
@@ -118,13 +103,13 @@ Symbol: Reset_Handler
       At line 6 in file sum.asm
       At line 10 in file sum.asm
 
-STOP 0000002A
+STOP 00000022
 
 Symbol: STOP
    Definitions
-      At line 30 in file sum.asm
+      At line 29 in file sum.asm
    Uses
-      At line 30 in file sum.asm
+      At line 29 in file sum.asm
 Comment: STOP used once
 mycoder 00000000
 
@@ -134,7 +119,7 @@ Symbol: mycoder
    Uses
       None
 Comment: mycoder unused
-6 symbols
+5 symbols
 
 
 
@@ -145,7 +130,7 @@ M 00000000
 
 Symbol: M
    Definitions
-      At line 35 in file sum.asm
+      At line 33 in file sum.asm
    Uses
       At line 16 in file sum.asm
 Comment: M used once
@@ -153,9 +138,9 @@ mydata 00000000
 
 Symbol: mydata
    Definitions
-      At line 34 in file sum.asm
+      At line 32 in file sum.asm
    Uses
       None
 Comment: mydata unused
 2 symbols
-343 symbols in table
+342 symbols in table
