@@ -1,0 +1,33 @@
+    AREA RESET, DATA, READONLY
+    EXPORT __Vectors
+
+__Vectors
+    DCD 0x10001000
+    DCD Reset_Handler
+    ALIGN
+    AREA mycoder, CODE, READONLY
+    ENTRY
+    EXPORT Reset_Handler
+	
+Reset_Handler
+    ;/32 bit number convert to ascii
+	LDR R0, =N
+	LDR R1, [R0]
+	LDR R2, =M
+	LDR R3, =0x8
+	
+LOOP AND R4, R1, #0xF
+	CMP R4, #0xA
+	ADDGT R4, #7
+	ADDLT R4, #30
+	ROR R1, #4
+	SUBS R3, #1
+	BNE LOOP
+    
+    
+STOP B STOP
+
+N DCD 0x42F1C930
+    AREA mydata, DATA, READWRITE
+M DCD 0
+    END

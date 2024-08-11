@@ -1,0 +1,32 @@
+    AREA RESET, DATA, READONLY
+    EXPORT __Vectors
+
+__Vectors
+    DCD 0x10001000
+    DCD Reset_Handler
+    ALIGN
+    AREA mycoder, CODE, READONLY
+    ENTRY
+    EXPORT Reset_Handler
+	
+Reset_Handler
+    ;/pack 8 32-bit numbers into a single number and store in data memory
+	;/left shift number, then OR with the next number
+	LDR R0, =N
+	LDR R3, =0x8
+	
+LOOP LDR R1, [R0], #4
+	LSL R2, R2, #4
+	ORR R2, R2, R1
+	SUBS R3, #1
+	BNE LOOP
+	;/storing in memory
+	LDR R1, =M
+    STR R2, [R1]
+    
+STOP B STOP
+
+N DCD 1,2,3,4,5,6,7,8
+    AREA mydata, DATA, READWRITE
+M DCD 0
+    END

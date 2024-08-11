@@ -24,18 +24,16 @@ ARM Macro Assembler    Page 1
                                                             low 32 bits)
    18 0000000A F04F 0400       MOV              R4, #0      ; diff of numbers (
                                                             high 32 bits)
-   19 0000000E         
-   20 0000000E F850 6B04       LDR              R6, [R0], #4
-   21 00000012 F851 7B04       LDR              R7, [R1], #4
-   22 00000016 1BF3            SUBS             R3, R6, R7
-   23 00000018 F850 6B04       LDR              R6, [R0], #4
-   24 0000001C F851 7B04       LDR              R7, [R1], #4
-   25 00000020 EB66 0407       SBC              R4, R6, R7
-   26 00000024 F842 3B04       STR              R3, [R2], #4 
-                                                            ; Store low 32 bits
-                                                            
-   27 00000028 6014            STR              R4, [R2]    ; Store high 32 bit
-                                                            s
+   19 0000000E F04F 0502       LDR              R5, =2
+   20 00000012         
+   21 00000012 F850 6B04 
+                       LOOP    LDR              R6, [R0], #4
+   22 00000016 F851 7B04       LDR              R7, [R1], #4
+   23 0000001A EB66 0307       SBC              R3, R6, R7
+   24 0000001E F842 3B04       STR              R3, [R2], #4
+   25 00000022 F1A5 0501       SUB              R5, #1
+   26 00000026 2D00            CMP              R5, #0
+   27 00000028 D1F3            BNE              LOOP
    28 0000002A         
    29 0000002A         
    30 0000002A E7FE    STOP    B                STOP
@@ -87,6 +85,14 @@ Comment: __Vectors used once
 ARM Macro Assembler    Page 1 Alphabetic symbol ordering
 Relocatable symbols
 
+LOOP 00000012
+
+Symbol: LOOP
+   Definitions
+      At line 21 in file sum.asm
+   Uses
+      At line 27 in file sum.asm
+Comment: LOOP used once
 N1 0000002C
 
 Symbol: N1
@@ -128,7 +134,7 @@ Symbol: mycoder
    Uses
       None
 Comment: mycoder unused
-5 symbols
+6 symbols
 
 
 
@@ -152,4 +158,4 @@ Symbol: mydata
       None
 Comment: mydata unused
 2 symbols
-342 symbols in table
+343 symbols in table

@@ -1,0 +1,34 @@
+	AREA RESET, DATA, READONLY
+    EXPORT __Vectors
+
+__Vectors
+    DCD 0x10001000
+    DCD Reset_Handler
+    ALIGN
+    AREA mycoder, CODE, READONLY
+    ENTRY
+    EXPORT Reset_Handler
+	
+Reset_Handler
+	;/gcd of 2 numbers(euclids algorithm)
+	LDR R0, =N
+	LDR R1, =L
+	LDR R3, [R0]
+	LDR R4, [R1]
+	LDR R2, =M
+	
+LOOP CMP R3, R4
+	SUBGT R3, R3, R4
+	SUBLT R4, R4, R3
+	BNE LOOP
+	
+	STR R3, [R2]
+	
+    
+STOP B STOP
+
+N DCD 0X42F
+L DCD 0X1CE
+    AREA mydata, DATA, READWRITE
+M DCD 0
+    END

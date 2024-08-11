@@ -16,15 +16,15 @@ Reset_Handler
     LDR R2, =M
     MOV R3, #0  ; diff of numbers (low 32 bits)
     MOV R4, #0  ; diff of numbers (high 32 bits)
+	LDR R5, =2
     
-	LDR R6, [R0], #4
+LOOP LDR R6, [R0], #4
     LDR R7, [R1], #4
-    SUBS R3, R6, R7
-	LDR R6, [R0], #4
-    LDR R7, [R1], #4
-    SBC R4, R6, R7
-	STR R3, [R2], #4  ; Store low 32 bits
-    STR R4, [R2]      ; Store high 32 bits
+    SBC R3, R6, R7
+	STR R3, [R2], #4
+	SUB R5, #1
+	CMP R5, #0
+	BNE LOOP
     
     
 STOP B STOP

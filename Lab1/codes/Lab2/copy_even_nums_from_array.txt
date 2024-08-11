@@ -1,0 +1,31 @@
+    AREA RESET, DATA, READONLY
+    EXPORT __Vectors
+
+__Vectors
+    DCD 0x10001000
+    DCD Reset_Handler
+    ALIGN
+    AREA mycoder, CODE, READONLY
+    ENTRY
+    EXPORT Reset_Handler
+	
+Reset_Handler
+    ;/program to copy even numbers in an array stored in code memory
+	
+	LDR R0, =N
+	LDR R3, =M
+	LDR R4, =4
+	
+LOOP LDR R1, [R0], #4
+	AND R2, R1, #1
+	CMP R2, #0
+	STREQ R1, [R3], #4
+	SUBS R4, #1
+	BNE LOOP
+    
+STOP B STOP
+
+N DCD 1, 2, 3, 4
+    AREA mydata, DATA, READWRITE
+M DCD 0
+    END
