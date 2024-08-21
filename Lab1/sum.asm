@@ -1,34 +1,33 @@
-    AREA RESET, DATA, READONLY
-    EXPORT __Vectors
-
-__Vectors
-    DCD 0x10001000
-    DCD Reset_Handler
-    ALIGN
-    AREA mycoder, CODE, READONLY
-    ENTRY
-    EXPORT Reset_Handler
-	
+	AREA RESET, DATA, READONLY
+	EXPORT __VECTORS
+__VECTORS
+	DCD 0X00010001
+	DCD Reset_Handler
+	ALIGN
+	AREA mycoed, CODE,READONLY
+	ENTRY
+	EXPORT Reset_Handler
 Reset_Handler
-    ;/32 bit number convert to ascii
-	LDR R0, =N
-	LDR R1, [R0]
-	LDR R2, =M
-	LDR R3, =0x2;/counter
+	LDR R0,=NUM
+	LDR R5,=M
+UP LDR R6,[R5],#4
+	LDR R1,[R0],#4
+	LSR R2,R1,#1;R2=R1/2
+UP2 MOV R3,R2;MOVES R2 INTO R3
+UP3 CMP R1,R3
+	SUBLT R3,R1
+	SUBGT R1,R3
+	BNE UP3
+	CMP R1,R2
+	BEQ UP
+	SUBS R2,#1
+	BNE UP2
+	STREQ R1,[R6],#4
+	BEQ UP
 	
-LOOP AND R4, R1, #0xF;/stores LSB in R4
-	CMP R4, #0x9;/to check if number or char
-	ADDHI R4, #0x37;/0x41(ascii of A) - 0xA = 0X37
-	ADDLS R4, #0x30;/ascii code for 0 in hex
-	LSR R1, #4
-	SUBS R3, #1
-	STR R4, [R2], #4
-	BNE LOOP
-    
-    
 STOP B STOP
-
-N DCD 0xA3
-    AREA mydata, DATA, READWRITE
-M DCD 0
-    END
+	
+NUM DCD #1,#2,#3,#4,#5,#6,#7,#8,#9,#10
+M DCD 0X10000000
+	AREA mydata, DATA, READWRITE
+	END
