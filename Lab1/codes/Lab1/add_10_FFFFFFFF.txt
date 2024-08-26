@@ -9,7 +9,7 @@ __Vectors
 	ENTRY
 	EXPORT Reset_Handler
 Reset_Handler
-	LDR R0, =N;/write a program to store 10 elements in code memory and find the sum of elements of the array and store the sum in data memory
+	LDR R0, =N;store 10 elements in code memory and store the sum in data memory
 	LDR R2, =M
 	MOV R3, #10
 	LDR R4, =0x0;/sum of array elements
@@ -21,8 +21,8 @@ BACK LDR R1, [R0], #4
 	SUBS R3, #1
 	BNE BACK
 	
-	STR R5, [R2], #4
-	STR R4, [R2]
+	STR R4, [R2], #4
+	STR R5, [R2]
 STOP B STOP
 N DCD 0xFFFFFFFF,0xFFFFFFFF,0xFFFFFFFF,0xFFFFFFFF,0xFFFFFFFF,0xFFFFFFFF,0xFFFFFFFF,0xFFFFFFFF,0xFFFFFFFF,0xFFFFFFFF
 	AREA mydata, DATA, READWRITE

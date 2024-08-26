@@ -1,0 +1,156 @@
+
+
+
+ARM Macro Assembler    Page 1 
+
+
+    1 00000000                 AREA             RESET, DATA, READONLY
+    2 00000000                 EXPORT           __Vectors
+    3 00000000         
+    4 00000000         __Vectors
+    5 00000000 10001000        DCD              0x10001000
+    6 00000004 00000000        DCD              Reset_Handler
+    7 00000008                 ALIGN
+    8 00000008                 AREA             mycode, CODE, READONLY
+    9 00000000                 ENTRY
+   10 00000000                 EXPORT           Reset_Handler
+   11 00000000         
+   12 00000000         Reset_Handler
+   13 00000000         ; subtract 2 64-bit numbers and store in memory
+   14 00000000 480B            LDR              R0, =N1
+   15 00000002 490C            LDR              R1, =N2
+   16 00000004 4A0C            LDR              R2, =M
+   17 00000006 F04F 0502       LDR              R5, =2
+   18 0000000A         
+   19 0000000A F850 6B04 
+                       LOOP    LDR              R6, [R0], #4
+   20 0000000E F851 7B04       LDR              R7, [R1], #4
+   21 00000012 1BF3            SUBS             R3, R6, R7
+   22 00000014 F842 3B04       STR              R3, [R2], #4
+   23 00000018 3D01            SUBS             R5, #1
+   24 0000001A D1F6            BNE              LOOP
+   25 0000001C         
+   26 0000001C         
+   27 0000001C E7FE    STOP    B                STOP
+   28 0000001E         
+   29 0000001E 00 00 FFFFFFFF 
+              00000002 N1      DCD              0xFFFFFFFF, 0x00000002 ; 64-bit
+                                                             number: 0x00000002
+                                                            FFFFFFFF
+   30 00000028 00000003 
+              00000004 N2      DCD              0x00000003, 0x00000004 ; 64-bit
+                                                             number: 0x00000004
+                                                            00000003
+   31 00000030 00000000 
+              00000000 
+              00000000         AREA             mydata, DATA, READWRITE
+   32 00000000 00000000 
+              00000000 M       DCD              0, 0        ; Space for 64-bit 
+                                                            result
+   33 00000008                 END
+Command Line: --debug --xref --cpu=Cortex-M3 --apcs=interwork --depend=sum.d -o
+sum.o -IC:\Keil\ARM\RV31\INC -IC:\Keil\ARM\CMSIS\Include -IC:\Keil\ARM\Inc\NXP\
+LPC17xx --predefine="__EVAL SETA 1" --list=sum.lst sum.asm
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Relocatable symbols
+
+RESET 00000000
+
+Symbol: RESET
+   Definitions
+      At line 1 in file sum.asm
+   Uses
+      None
+Comment: RESET unused
+__Vectors 00000000
+
+Symbol: __Vectors
+   Definitions
+      At line 4 in file sum.asm
+   Uses
+      At line 2 in file sum.asm
+Comment: __Vectors used once
+2 symbols
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Relocatable symbols
+
+LOOP 0000000A
+
+Symbol: LOOP
+   Definitions
+      At line 19 in file sum.asm
+   Uses
+      At line 24 in file sum.asm
+Comment: LOOP used once
+N1 00000020
+
+Symbol: N1
+   Definitions
+      At line 29 in file sum.asm
+   Uses
+      At line 14 in file sum.asm
+Comment: N1 used once
+N2 00000028
+
+Symbol: N2
+   Definitions
+      At line 30 in file sum.asm
+   Uses
+      At line 15 in file sum.asm
+Comment: N2 used once
+Reset_Handler 00000000
+
+Symbol: Reset_Handler
+   Definitions
+      At line 12 in file sum.asm
+   Uses
+      At line 6 in file sum.asm
+      At line 10 in file sum.asm
+
+STOP 0000001C
+
+Symbol: STOP
+   Definitions
+      At line 27 in file sum.asm
+   Uses
+      At line 27 in file sum.asm
+Comment: STOP used once
+mycode 00000000
+
+Symbol: mycode
+   Definitions
+      At line 8 in file sum.asm
+   Uses
+      None
+Comment: mycode unused
+6 symbols
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Relocatable symbols
+
+M 00000000
+
+Symbol: M
+   Definitions
+      At line 32 in file sum.asm
+   Uses
+      At line 16 in file sum.asm
+Comment: M used once
+mydata 00000000
+
+Symbol: mydata
+   Definitions
+      At line 31 in file sum.asm
+   Uses
+      None
+Comment: mydata unused
+2 symbols
+343 symbols in table

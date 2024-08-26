@@ -5,7 +5,7 @@ __Vectors
     DCD 0x10001000
     DCD Reset_Handler
     ALIGN
-    AREA mycoder, CODE, READONLY
+    AREA mycode, CODE, READONLY
     ENTRY
     EXPORT Reset_Handler
 	
@@ -20,8 +20,7 @@ LOOP LDR R6, [R0], #4
     LDR R7, [R1], #4
     SUBS R3, R6, R7
 	STR R3, [R2], #4
-	SUB R5, #1
-	CMP R5, #0
+	SUBS R5, #1
 	BNE LOOP
     
     
