@@ -168,7 +168,7 @@
         <Mm>
           <WinNumber>1</WinNumber>
           <SubType>0</SubType>
-          <ItemText>0x0000002C</ItemText>
+          <ItemText>0x00000024</ItemText>
         </Mm>
       </MemoryWindow1>
       <MemoryWindow2>
@@ -224,10 +224,10 @@
       <FileType>2</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
-      <ColumnNumber>14</ColumnNumber>
+      <ColumnNumber>0</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>10</TopLine>
-      <CurrentLine>23</CurrentLine>
+      <TopLine>7</TopLine>
+      <CurrentLine>27</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>.\sum.asm</PathWithFileName>
       <FilenameWithoutPath>sum.asm</FilenameWithoutPath>

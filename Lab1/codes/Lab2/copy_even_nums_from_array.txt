@@ -17,7 +17,7 @@ Reset_Handler
 	LDR R4, =4
 	
 LOOP LDR R1, [R0], #4
-	AND R2, R1, #1
+	AND R2, R1, #1;/LSB in an even number is always 0
 	CMP R2, #0
 	STREQ R1, [R3], #4
 	SUBS R4, #1

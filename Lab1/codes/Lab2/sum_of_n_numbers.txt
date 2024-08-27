@@ -17,7 +17,7 @@ Reset_Handler
 	LDR R1, [R0]
 	LDR R3, =M
 	MLA R2, R1, R1, R1
-	LSR R2, R2, #1;right shift by 1 byte to divide by 2
+	LSR R2, R2, #1;right shift by 1 bit to divide by 2
 	STR R2, [R3]
     
 STOP B STOP

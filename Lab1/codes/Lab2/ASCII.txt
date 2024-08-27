@@ -14,7 +14,7 @@ Reset_Handler
 	LDR R0, =N
 	LDR R1, [R0]
 	LDR R2, =M
-	LDR R3, =0x2;/counter
+	LDR R3, =0x8;/counter
 	
 LOOP AND R4, R1, #0xF;/stores LSB in R4
 	CMP R4, #0x9;/to check if number or char
@@ -28,7 +28,7 @@ LOOP AND R4, R1, #0xF;/stores LSB in R4
     
 STOP B STOP
 
-N DCD 0xA3
+N DCD 0xA31234B5
     AREA mydata, DATA, READWRITE
 M DCD 0
     END
