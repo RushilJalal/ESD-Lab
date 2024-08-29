@@ -18,7 +18,7 @@ Reset_Handler
 	
 LOOP AND R4, R1, #0xF;/stores LSB in R4
 	CMP R4, #0x9;/to check if number or char
-	ADDHI R4, #0x37;/0x41(ascii of A) - 0xA = 0X37
+	ADDHI R4, #0x37;/0x41(ascii of A) - 0xA = 0x37
 	ADDLS R4, #0x30;/ascii code for 0 in hex
 	LSR R1, #4
 	SUBS R3, #1

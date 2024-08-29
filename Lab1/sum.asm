@@ -1,33 +1,46 @@
-    AREA RESET, DATA, READONLY
-    EXPORT __Vectors
+    AREA    RESET, CODE, READONLY
+    EXPORT  __Vectors
 
-__Vectors
-    DCD 0x10001000
-    DCD Reset_Handler
+__Vectors 
+    DCD     0x10001000     ; Initial stack pointer value
+    DCD     Reset_Handler  ; Reset vector (entry point)
     ALIGN
-    AREA mycoder, CODE, READONLY
-    ENTRY
-    EXPORT Reset_Handler
-	
-Reset_Handler
-    ;/32 bit number convert to ascii
-	LDR R0, =N
-	LDR R1, [R0]
-	LDR R2, =M
-	LDR R3, =0x8;/counter
-	
-LOOP AND R4, R1, #0xF;/stores LSB in R4
-	CMP R4, #0x9;/to check if number or char
-	ADDHI R4, #0x37;/0x41(ascii of A) - 0xA = 0X37
-	ADDLS R4, #0x30;/ascii code for 0 in hex
-	LSR R1, #4
-	SUBS R3, #1
-	STR R4, [R2], #4
-	BNE LOOP
-    
-STOP B STOP
 
-N DCD 0xA31234B5
-    AREA mydata, DATA, READWRITE
-M DCD 0
+    AREA    mycode, CODE, READONLY
+    ENTRY
+    EXPORT  Reset_Handler
+
+Reset_Handler
+    LDR R0, =NUM1          ; Load address of first number
+    LDR R1, [R0]           ; Load first number into R1
+    LDR R0, =NUM2          ; Load address of second number
+    LDR R2, [R0]           ; Load second number into R2
+	MUL R11, R1, R2			; PRODUCT OF A,B
+	LDR R6, =RESULT
+
+GCD_LOOP
+    CMP R1, R2             ; Compare R1 and R2
+    SUBGT R1, R1, R2
+	SUBLT R2, R2, R1
+    BNE GCD_LOOP
+	
+	MOV R10, R2 ;STORES GCD
+	
+DIV_LOOP
+    SUBS R11, R10
+	ADD R5, #1
+	CMP R11, #0
+    BNE DIV_LOOP             ; Repeat until numerator < denominator
+
+	STR R5, [R6]
+	
+STOP 
+    B STOP                 ; Infinite loop to stop execution
+
+NUM1    DCD     12          ; First number
+NUM2    DCD     18          ; Second number
+
+    AREA    result, DATA, READWRITE
+RESULT  DCD     0           ; Variable to store the result
+
     END
